@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
-
+    Cursor cursor;
     ArrayList<String> mobileArray = new ArrayList<>();
 
     @Override
@@ -24,13 +24,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHelper = new DatabaseHelper(this);
-        Cursor cursor = databaseHelper.getCustomersFullName();
+        cursor = databaseHelper.getCustomersFullName();
 
         if (cursor.moveToFirst()) {
             do {
                 mobileArray.add(cursor.getString(0) +". "+ cursor.getString(1) + ", " + cursor.getString(2));
             } while (cursor.moveToNext());
         }
+        
             ArrayAdapter adapter = new ArrayAdapter<String>(this,
                     R.layout.activity_listview, mobileArray);
             final ListView listView = (ListView) findViewById(R.id.customer_list_view);
@@ -40,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MainActivity.this, EditCustomer.class);
-                intent.putExtra("Id", listView.getItemIdAtPosition(position)+1);
+                int Id = Integer.parseInt(mobileArray.get(position).substring(0, mobileArray.get(position).indexOf(".")));
+                intent.putExtra("Id",  Id);
                 startActivities(new Intent[]{intent});
             }
         });

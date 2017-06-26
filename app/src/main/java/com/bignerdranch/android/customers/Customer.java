@@ -47,7 +47,6 @@ public class Customer {
     }
 
     public int getId() {
-
         return id;
     }
     public void setId(int id) {

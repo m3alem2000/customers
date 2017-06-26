@@ -56,20 +56,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addCustomer(Customer customer) {
+    public boolean addCustomer(ContentValues contentValues) {
 
         sqLiteDatabase = this.getWritableDatabase();
-        ContentValues values = new ContentValues();   // storage key/value pairs
-        values.put(FNAME, customer.getFname());
-        values.put(LNAME, customer.getLname());
-        values.put(EMAIL, customer.getEmail());
-        values.put(TEL, customer.getTel());
-        values.put(TEL_TYPE, customer.getTel_type());
-        values.put(ADDRESS, customer.getAddress());
-        values.put(STATE, customer.getState());
-        values.put(CITY, customer.getCity());
-        values.put(ZIP_CODE, customer.getZip());
-        long result = sqLiteDatabase.insert(DB_TABLE_NAME, null, values);
+        long result = sqLiteDatabase.insert(DB_TABLE_NAME, null, contentValues);
         if(result ==  -1){
             return false;
         }else {
@@ -105,5 +95,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String DBQuery = "select * from " + DB_TABLE_NAME + " where  " + ID +" = " + Id;
         Cursor cursor = sqLiteDatabase.rawQuery(DBQuery, null);
         return cursor;
+    }
+
+    protected void deleteCustomerById(long Id ){
+        sqLiteDatabase = this.getReadableDatabase();
+        sqLiteDatabase.delete(DB_TABLE_NAME, ID +" = " + Id, null);
     }
 }

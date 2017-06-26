@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -95,5 +98,19 @@ public class EditCustomer extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tel_type.setAdapter(dataAdapter);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.delete_customer, menu);
+        return true;
+    }
+
+    public void deleteCustomer(MenuItem item) {
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+        databaseHelper.deleteCustomerById(Id);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.bignerdranch.android.customers;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -34,13 +35,20 @@ public class NewCustomer extends AppCompatActivity {
             EditText city = (EditText) findViewById(R.id.city);
             EditText state = (EditText) findViewById(R.id.state);
             EditText zip = (EditText) findViewById(R.id.zip_code);
-            Customer customer = new Customer(fname.getText().toString(), lname.getText().toString(),
-                    email.getText().toString(), tel.getText().toString(), tel_type,
-                    address.getText().toString(), city.getText().toString(),
-                    state.getText().toString(), zip.getText().toString());
+
+        ContentValues values = new ContentValues();
+        values.put(DatabaseHelper.FNAME, fname.getText().toString());
+        values.put(DatabaseHelper.LNAME, lname.getText().toString());
+        values.put(DatabaseHelper.EMAIL, email.getText().toString());
+        values.put(DatabaseHelper.TEL, tel.getText().toString());
+        values.put(DatabaseHelper.TEL_TYPE, tel_type.toString());
+        values.put(DatabaseHelper.ADDRESS, address.getText().toString());
+        values.put(DatabaseHelper.STATE, state.getText().toString());
+        values.put(DatabaseHelper.CITY, city.getText().toString());
+        values.put(DatabaseHelper.ZIP_CODE, zip.getText().toString());
 
             DatabaseHelper databaseHelper = new DatabaseHelper(this);
-            boolean status = databaseHelper.addCustomer(customer);
+            boolean status = databaseHelper.addCustomer(values);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
     }
