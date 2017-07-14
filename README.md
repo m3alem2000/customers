@@ -1,4 +1,4 @@
-# android.customers
+Customers
 
 Customer form used SQLite database to demonstrate the following:
 . Navigation between activities using intent and passing values around.
